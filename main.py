@@ -34,14 +34,16 @@ def handler(event):
     u1 = preprocess_image(frame1_b64)[tf.newaxis, ...]
     u2 = preprocess_image(frame2_b64)[tf.newaxis, ...]
     
-    # แก้ไขตรงนี้: ปรับ shape ของ time ให้เป็น (1, 1) ตามที่โมเดลบังคับ
+    # บังคับ reshape ให้เป็น shape (1, 1) แบบเป๊ะๆ ป้องกันปัญหาเดิมซ้ำซาก
+    time_tensor = tf.constant([0.5], dtype=tf.float32)
+    time_tensor = tf.reshape(time_tensor, [1, 1])
+
     inference_input = {
         'x0': u1, 
         'x1': u2, 
-        'time': tf.constant([[0.5]], dtype=tf.float32)
+        'time': time_tensor
     }
     
-    # แก้ไขตรงนี้: ส่ง arguments ครบ 3 ตัวตามที่ SavedModel คาดหวัง (input_dict, False, None)
     result = model(inference_input, False, None)
     interpolated_frame = result['image'][0]
     
