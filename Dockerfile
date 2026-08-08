@@ -1,7 +1,7 @@
-FROM runpod/base:0.4.0-cuda12.1.0-devel-ubuntu22.04
+FROM runpod/pytorch:2.1.1-py3.10-cuda12.1.1-devel-ubuntu22.04
 
 COPY requirements.txt /requirements.txt
-RUN python3 -m pip install -r /requirements.txt
+RUN pip install --no-cache-dir -r /requirements.txt
 
 COPY . /app
 WORKDIR /app
