@@ -1,3 +1,5 @@
 runpod
-fastapi
-uvicorn
+tensorflow
+tensorflow-hub
+numpy
+Pillow
